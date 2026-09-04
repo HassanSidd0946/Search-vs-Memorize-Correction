@@ -1,0 +1,117 @@
+{
+  "condition": "Condition 4 \u2014 RAW TANGENT VECTOR diagnostic (subjects 01-05 only)",
+  "is_diagnostic": true,
+  "n_folds": 5,
+  "fold_results": [
+    {
+      "test_subject": "01",
+      "raw_tangent_dim": 1953,
+      "pca_components_used": 35,
+      "best_shrink_weight": 0.1,
+      "pre_calibration_acc": 0.5300859598853869,
+      "post_calibration_acc": 0.673352435530086,
+      "sensitivity": 0.764367816091954,
+      "specificity": 0.5828571428571429,
+      "f1": 0.7,
+      "confusion_matrix": [
+        [
+          102,
+          73
+        ],
+        [
+          41,
+          133
+        ]
+      ]
+    },
+    {
+      "test_subject": "02",
+      "raw_tangent_dim": 1953,
+      "pca_components_used": 35,
+      "best_shrink_weight": 0.0,
+      "pre_calibration_acc": 0.5294117647058824,
+      "post_calibration_acc": 0.5294117647058824,
+      "sensitivity": 0.7647058823529411,
+      "specificity": 0.29411764705882354,
+      "f1": 0.6190476190476191,
+      "confusion_matrix": [
+        [
+          50,
+          120
+        ],
+        [
+          40,
+          130
+        ]
+      ]
+    },
+    {
+      "test_subject": "03",
+      "raw_tangent_dim": 1953,
+      "pca_components_used": 35,
+      "best_shrink_weight": 1.0,
+      "pre_calibration_acc": 0.4,
+      "post_calibration_acc": 0.8117647058823529,
+      "sensitivity": 0.8176470588235294,
+      "specificity": 0.8058823529411765,
+      "f1": 0.8128654970760234,
+      "confusion_matrix": [
+        [
+          137,
+          33
+        ],
+        [
+          31,
+          139
+        ]
+      ]
+    },
+    {
+      "test_subject": "04",
+      "raw_tangent_dim": 1953,
+      "pca_components_used": 35,
+      "best_shrink_weight": 0.0,
+      "pre_calibration_acc": 0.5411764705882353,
+      "post_calibration_acc": 0.5411764705882353,
+      "sensitivity": 0.35294117647058826,
+      "specificity": 0.7294117647058823,
+      "f1": 0.43478260869565216,
+      "confusion_matrix": [
+        [
+          124,
+          46
+        ],
+        [
+          110,
+          60
+        ]
+      ]
+    },
+    {
+      "test_subject": "05",
+      "raw_tangent_dim": 1953,
+      "pca_components_used": 35,
+      "best_shrink_weight": 0.4,
+      "pre_calibration_acc": 0.5852941176470589,
+      "post_calibration_acc": 0.75,
+      "sensitivity": 0.8,
+      "specificity": 0.7,
+      "f1": 0.7619047619047619,
+      "confusion_matrix": [
+        [
+          119,
+          51
+        ],
+        [
+          34,
+          136
+        ]
+      ]
+    }
+  ],
+  "mean_accuracy": 0.6611410753413113,
+  "std_accuracy": 0.11178248660731234,
+  "reference_condition4v2_subset_mean": 0.6599,
+  "reference_spatial_only_ablation_mean": 0.6041,
+  "reference_dualbranch_pilot_mean": 0.557
+}

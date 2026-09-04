@@ -1,0 +1,780 @@
+{
+  "condition": "Condition 4 \u2014 ASYMMETRIC FUSION (raw 1953-d tangent + lightweight True-Mamba temporal)",
+  "is_pilot": false,
+  "n_folds": 29,
+  "hyperparameters": {
+    "d_model": 16,
+    "d_state": 8,
+    "n_layers": 1,
+    "expand": 2,
+    "dt_rank": 4,
+    "conv_kernel": 4,
+    "dropout": 0.3,
+    "pretrain_wd": 0.01,
+    "pretrain_es_patience": 8,
+    "cal_fraction": 0.15,
+    "pca_max_components": 35
+  },
+  "fold_results": [
+    {
+      "fold_index": 0,
+      "test_subject": "01",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.5959885386819485,
+      "post_calibration_acc": 0.6934097421203438,
+      "sensitivity": 0.7241379310344828,
+      "specificity": 0.6628571428571428,
+      "f1": 0.7019498607242339,
+      "confusion_matrix": [
+        [
+          116,
+          59
+        ],
+        [
+          48,
+          126
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5214899713467048,
+      "condition3_zero_shot_acc": 0.6195121951219512
+    },
+    {
+      "fold_index": 1,
+      "test_subject": "02",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.5,
+      "pre_calibration_acc": 0.4970588235294118,
+      "post_calibration_acc": 0.5794117647058824,
+      "sensitivity": 0.28823529411764703,
+      "specificity": 0.8705882352941177,
+      "f1": 0.4066390041493776,
+      "confusion_matrix": [
+        [
+          148,
+          22
+        ],
+        [
+          121,
+          49
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5117647058823529,
+      "condition3_zero_shot_acc": 0.6225
+    },
+    {
+      "fold_index": 2,
+      "test_subject": "03",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 1.0,
+      "pre_calibration_acc": 0.3941176470588235,
+      "post_calibration_acc": 0.8264705882352941,
+      "sensitivity": 0.8411764705882353,
+      "specificity": 0.8117647058823529,
+      "f1": 0.8289855072463768,
+      "confusion_matrix": [
+        [
+          138,
+          32
+        ],
+        [
+          27,
+          143
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.6852941176470588,
+      "condition3_zero_shot_acc": 0.49
+    },
+    {
+      "fold_index": 3,
+      "test_subject": "04",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.0,
+      "pre_calibration_acc": 0.4852941176470588,
+      "post_calibration_acc": 0.4852941176470588,
+      "sensitivity": 0.29411764705882354,
+      "specificity": 0.6764705882352942,
+      "f1": 0.36363636363636365,
+      "confusion_matrix": [
+        [
+          115,
+          55
+        ],
+        [
+          120,
+          50
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5352941176470588,
+      "condition3_zero_shot_acc": 0.505
+    },
+    {
+      "fold_index": 4,
+      "test_subject": "05",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 1.0,
+      "pre_calibration_acc": 0.538235294117647,
+      "post_calibration_acc": 0.75,
+      "sensitivity": 0.7764705882352941,
+      "specificity": 0.7235294117647059,
+      "f1": 0.7564469914040115,
+      "confusion_matrix": [
+        [
+          123,
+          47
+        ],
+        [
+          38,
+          132
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5441176470588235,
+      "condition3_zero_shot_acc": 0.4975
+    },
+    {
+      "fold_index": 5,
+      "test_subject": "06",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 1.0,
+      "pre_calibration_acc": 0.5,
+      "post_calibration_acc": 0.9088235294117647,
+      "sensitivity": 0.9235294117647059,
+      "specificity": 0.8941176470588236,
+      "f1": 0.9101449275362319,
+      "confusion_matrix": [
+        [
+          152,
+          18
+        ],
+        [
+          13,
+          157
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.6970588235294117,
+      "condition3_zero_shot_acc": 0.59
+    },
+    {
+      "fold_index": 6,
+      "test_subject": "07",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.7,
+      "pre_calibration_acc": 0.5264705882352941,
+      "post_calibration_acc": 0.5882352941176471,
+      "sensitivity": 0.8823529411764706,
+      "specificity": 0.29411764705882354,
+      "f1": 0.6818181818181818,
+      "confusion_matrix": [
+        [
+          50,
+          120
+        ],
+        [
+          20,
+          150
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5294117647058824,
+      "condition3_zero_shot_acc": 0.5
+    },
+    {
+      "fold_index": 7,
+      "test_subject": "08",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.3,
+      "pre_calibration_acc": 0.5147058823529411,
+      "post_calibration_acc": 0.55,
+      "sensitivity": 0.8352941176470589,
+      "specificity": 0.2647058823529412,
+      "f1": 0.6498855835240275,
+      "confusion_matrix": [
+        [
+          45,
+          125
+        ],
+        [
+          28,
+          142
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5088235294117647,
+      "condition3_zero_shot_acc": 0.5
+    },
+    {
+      "fold_index": 8,
+      "test_subject": "10",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.7,
+      "pre_calibration_acc": 0.538235294117647,
+      "post_calibration_acc": 0.6852941176470588,
+      "sensitivity": 0.611764705882353,
+      "specificity": 0.7588235294117647,
+      "f1": 0.6603174603174603,
+      "confusion_matrix": [
+        [
+          129,
+          41
+        ],
+        [
+          66,
+          104
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5852941176470589,
+      "condition3_zero_shot_acc": 0.5375
+    },
+    {
+      "fold_index": 9,
+      "test_subject": "11",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.2,
+      "pre_calibration_acc": 0.7588235294117647,
+      "post_calibration_acc": 0.8352941176470589,
+      "sensitivity": 0.9235294117647059,
+      "specificity": 0.7470588235294118,
+      "f1": 0.8486486486486486,
+      "confusion_matrix": [
+        [
+          127,
+          43
+        ],
+        [
+          13,
+          157
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.6294117647058823,
+      "condition3_zero_shot_acc": 0.6225
+    },
+    {
+      "fold_index": 10,
+      "test_subject": "12",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.4970588235294118,
+      "post_calibration_acc": 0.6176470588235294,
+      "sensitivity": 0.6,
+      "specificity": 0.6352941176470588,
+      "f1": 0.6107784431137725,
+      "confusion_matrix": [
+        [
+          108,
+          62
+        ],
+        [
+          68,
+          102
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5352941176470588,
+      "condition3_zero_shot_acc": 0.545
+    },
+    {
+      "fold_index": 11,
+      "test_subject": "13",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 1.0,
+      "pre_calibration_acc": 0.49411764705882355,
+      "post_calibration_acc": 0.6352941176470588,
+      "sensitivity": 0.6470588235294118,
+      "specificity": 0.6235294117647059,
+      "f1": 0.6395348837209303,
+      "confusion_matrix": [
+        [
+          106,
+          64
+        ],
+        [
+          60,
+          110
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5,
+      "condition3_zero_shot_acc": 0.59
+    },
+    {
+      "fold_index": 12,
+      "test_subject": "14",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.8,
+      "pre_calibration_acc": 0.43529411764705883,
+      "post_calibration_acc": 0.6794117647058824,
+      "sensitivity": 0.7647058823529411,
+      "specificity": 0.5941176470588235,
+      "f1": 0.7046070460704607,
+      "confusion_matrix": [
+        [
+          101,
+          69
+        ],
+        [
+          40,
+          130
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5970588235294118,
+      "condition3_zero_shot_acc": 0.475
+    },
+    {
+      "fold_index": 13,
+      "test_subject": "15",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.0,
+      "pre_calibration_acc": 0.5,
+      "post_calibration_acc": 0.5,
+      "sensitivity": 0.38235294117647056,
+      "specificity": 0.6176470588235294,
+      "f1": 0.43333333333333335,
+      "confusion_matrix": [
+        [
+          105,
+          65
+        ],
+        [
+          105,
+          65
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5411764705882353,
+      "condition3_zero_shot_acc": 0.5675
+    },
+    {
+      "fold_index": 14,
+      "test_subject": "16",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 1.0,
+      "pre_calibration_acc": 0.5176470588235295,
+      "post_calibration_acc": 0.861764705882353,
+      "sensitivity": 0.8588235294117647,
+      "specificity": 0.8647058823529412,
+      "f1": 0.8613569321533924,
+      "confusion_matrix": [
+        [
+          147,
+          23
+        ],
+        [
+          24,
+          146
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5529411764705883,
+      "condition3_zero_shot_acc": 0.5675
+    },
+    {
+      "fold_index": 15,
+      "test_subject": "17",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.2,
+      "pre_calibration_acc": 0.6029411764705882,
+      "post_calibration_acc": 0.6470588235294118,
+      "sensitivity": 0.611764705882353,
+      "specificity": 0.6823529411764706,
+      "f1": 0.6341463414634146,
+      "confusion_matrix": [
+        [
+          116,
+          54
+        ],
+        [
+          66,
+          104
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.6058823529411764,
+      "condition3_zero_shot_acc": 0.6775
+    },
+    {
+      "fold_index": 16,
+      "test_subject": "18",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.5,
+      "pre_calibration_acc": 0.16176470588235295,
+      "post_calibration_acc": 0.9647058823529412,
+      "sensitivity": 1.0,
+      "specificity": 0.9294117647058824,
+      "f1": 0.9659090909090909,
+      "confusion_matrix": [
+        [
+          158,
+          12
+        ],
+        [
+          0,
+          170
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.49117647058823527,
+      "condition3_zero_shot_acc": 0.4825
+    },
+    {
+      "fold_index": 17,
+      "test_subject": "19",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.6529411764705882,
+      "post_calibration_acc": 0.8117647058823529,
+      "sensitivity": 0.7647058823529411,
+      "specificity": 0.8588235294117647,
+      "f1": 0.8024691358024691,
+      "confusion_matrix": [
+        [
+          146,
+          24
+        ],
+        [
+          40,
+          130
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5588235294117647,
+      "condition3_zero_shot_acc": 0.6675
+    },
+    {
+      "fold_index": 18,
+      "test_subject": "20",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.7,
+      "pre_calibration_acc": 0.47352941176470587,
+      "post_calibration_acc": 0.7529411764705882,
+      "sensitivity": 0.6529411764705882,
+      "specificity": 0.8529411764705882,
+      "f1": 0.7254901960784313,
+      "confusion_matrix": [
+        [
+          145,
+          25
+        ],
+        [
+          59,
+          111
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5235294117647059,
+      "condition3_zero_shot_acc": 0.53
+    },
+    {
+      "fold_index": 19,
+      "test_subject": "21",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.8,
+      "pre_calibration_acc": 0.49117647058823527,
+      "post_calibration_acc": 0.6941176470588235,
+      "sensitivity": 0.788235294117647,
+      "specificity": 0.6,
+      "f1": 0.7204301075268817,
+      "confusion_matrix": [
+        [
+          102,
+          68
+        ],
+        [
+          36,
+          134
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.611764705882353,
+      "condition3_zero_shot_acc": 0.5375
+    },
+    {
+      "fold_index": 20,
+      "test_subject": "22",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.5235294117647059,
+      "post_calibration_acc": 0.7,
+      "sensitivity": 0.6764705882352942,
+      "specificity": 0.7235294117647059,
+      "f1": 0.6927710843373494,
+      "confusion_matrix": [
+        [
+          123,
+          47
+        ],
+        [
+          55,
+          115
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5235294117647059,
+      "condition3_zero_shot_acc": 0.5825
+    },
+    {
+      "fold_index": 21,
+      "test_subject": "23",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.7,
+      "pre_calibration_acc": 0.5,
+      "post_calibration_acc": 0.6088235294117647,
+      "sensitivity": 0.8529411764705882,
+      "specificity": 0.36470588235294116,
+      "f1": 0.6855791962174941,
+      "confusion_matrix": [
+        [
+          62,
+          108
+        ],
+        [
+          25,
+          145
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5705882352941176,
+      "condition3_zero_shot_acc": 0.4975
+    },
+    {
+      "fold_index": 22,
+      "test_subject": "24",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.47352941176470587,
+      "post_calibration_acc": 0.7088235294117647,
+      "sensitivity": 0.7705882352941177,
+      "specificity": 0.6470588235294118,
+      "f1": 0.7257617728531855,
+      "confusion_matrix": [
+        [
+          110,
+          60
+        ],
+        [
+          39,
+          131
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.47352941176470587,
+      "condition3_zero_shot_acc": 0.6525
+    },
+    {
+      "fold_index": 23,
+      "test_subject": "25",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.45588235294117646,
+      "post_calibration_acc": 0.8058823529411765,
+      "sensitivity": 0.8235294117647058,
+      "specificity": 0.788235294117647,
+      "f1": 0.8092485549132948,
+      "confusion_matrix": [
+        [
+          134,
+          36
+        ],
+        [
+          30,
+          140
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.6323529411764706,
+      "condition3_zero_shot_acc": 0.5075
+    },
+    {
+      "fold_index": 24,
+      "test_subject": "26",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.5,
+      "post_calibration_acc": 0.7411764705882353,
+      "sensitivity": 0.8647058823529412,
+      "specificity": 0.6176470588235294,
+      "f1": 0.7696335078534031,
+      "confusion_matrix": [
+        [
+          105,
+          65
+        ],
+        [
+          23,
+          147
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5264705882352941,
+      "condition3_zero_shot_acc": 0.6175
+    },
+    {
+      "fold_index": 25,
+      "test_subject": "27",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.2,
+      "pre_calibration_acc": 0.6176470588235294,
+      "post_calibration_acc": 0.7176470588235294,
+      "sensitivity": 0.6705882352941176,
+      "specificity": 0.7647058823529411,
+      "f1": 0.7037037037037037,
+      "confusion_matrix": [
+        [
+          130,
+          40
+        ],
+        [
+          56,
+          114
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5441176470588235,
+      "condition3_zero_shot_acc": 0.64
+    },
+    {
+      "fold_index": 26,
+      "test_subject": "28",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.5,
+      "post_calibration_acc": 0.9088235294117647,
+      "sensitivity": 0.9529411764705882,
+      "specificity": 0.8647058823529412,
+      "f1": 0.9126760563380282,
+      "confusion_matrix": [
+        [
+          147,
+          23
+        ],
+        [
+          8,
+          162
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5441176470588235,
+      "condition3_zero_shot_acc": 0.5
+    },
+    {
+      "fold_index": 27,
+      "test_subject": "29",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.4,
+      "pre_calibration_acc": 0.5470588235294118,
+      "post_calibration_acc": 0.7558823529411764,
+      "sensitivity": 0.8588235294117647,
+      "specificity": 0.6529411764705882,
+      "f1": 0.7786666666666666,
+      "confusion_matrix": [
+        [
+          111,
+          59
+        ],
+        [
+          24,
+          146
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.5647058823529412,
+      "condition3_zero_shot_acc": 0.48
+    },
+    {
+      "fold_index": 28,
+      "test_subject": "30",
+      "tangent_dim": 1953,
+      "temporal_dim": 16,
+      "fused_dim": 1969,
+      "n_temporal_params": 3990,
+      "best_shrink_weight": 0.9,
+      "pre_calibration_acc": 0.49411764705882355,
+      "post_calibration_acc": 0.6558823529411765,
+      "sensitivity": 0.5705882352941176,
+      "specificity": 0.7411764705882353,
+      "f1": 0.6237942122186495,
+      "confusion_matrix": [
+        [
+          126,
+          44
+        ],
+        [
+          73,
+          97
+        ]
+      ],
+      "condition1b_eegnet_calib_acc": 0.49117647058823527,
+      "condition3_zero_shot_acc": 0.5
+    }
+  ],
+  "mean_accuracy": 0.7127544941501944,
+  "std_accuracy": 0.11855841467997104,
+  "reference_condition1b_full_mean_acc": 0.5564,
+  "reference_condition4v2_full_mean_acc": 0.6779,
+  "reference_condition4v2_subset_mean_acc": 0.6599,
+  "reference_dualbranch_pilot_mean_acc": 0.557
+}

@@ -1,0 +1,297 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{pallerwagner2002}
+K.~A. Paller, A.~D. Wagner, Observing the transformation of experience into
+  memory, Trends in Cognitive Sciences 6~(2) (2002) 93--102.
+\newblock \href {https://doi.org/10.1016/S1364-6613(00)01845-3}
+  {\path{doi:10.1016/S1364-6613(00)01845-3}}.
+
+\bibitem{ruggcurran2007}
+M.~D. Rugg, T.~Curran, Event-related potentials and recognition memory, Trends
+  in Cognitive Sciences 11~(6) (2007) 251--257.
+\newblock \href {https://doi.org/10.1016/j.tics.2007.04.004}
+  {\path{doi:10.1016/j.tics.2007.04.004}}.
+
+\bibitem{wolpaw2002}
+J.~R. Wolpaw, N.~Birbaumer, D.~J. McFarland, G.~Pfurtscheller, T.~M. Vaughan,
+  Brain-computer interfaces for communication and control, Clinical
+  Neurophysiology 113~(6) (2002) 767--791.
+\newblock \href {https://doi.org/10.1016/S1388-2457(02)00057-3}
+  {\path{doi:10.1016/S1388-2457(02)00057-3}}.
+
+\bibitem{lotte2007}
+F.~Lotte, M.~Congedo, A.~L{\'e}cuyer, F.~Lamarche, B.~Arnaldi, A review of
+  classification algorithms for {EEG}-based brain-computer interfaces, Journal
+  of Neural Engineering 4~(2) (2007) R1--R13.
+\newblock \href {https://doi.org/10.1088/1741-2560/4/2/R01}
+  {\path{doi:10.1088/1741-2560/4/2/R01}}.
+
+\bibitem{lotte2018}
+F.~Lotte, L.~Bougrain, A.~Cichocki, M.~Clerc, M.~Congedo, A.~Rakotomamonjy,
+  F.~Yger, A review of classification algorithms for {EEG}-based brain-computer
+  interfaces: a 10 year update, Journal of Neural Engineering 15~(3) (2018)
+  031005.
+\newblock \href {https://doi.org/10.1088/1741-2552/aab2f2}
+  {\path{doi:10.1088/1741-2552/aab2f2}}.
+
+\bibitem{frenay2014}
+B.~Fr{\'e}nay, M.~Verleysen, Classification in the presence of label noise: A
+  survey, IEEE Transactions on Neural Networks and Learning Systems 25~(5)
+  (2014) 845--869.
+\newblock \href {https://doi.org/10.1109/TNNLS.2013.2292894}
+  {\path{doi:10.1109/TNNLS.2013.2292894}}.
+
+\bibitem{helbing2025}
+J.~Helbing, D.~Draschkow, M.~L.-H. V{\~{o}}, Incidental encoding of objects
+  during search is stronger than intentional memorization due to increased
+  recollection rather than familiarity, Journal of Cognitive Neuroscience
+  37~(12) (2025) 2538--2557.
+\newblock \href {https://doi.org/10.1162/jocn.a.80}
+  {\path{doi:10.1162/jocn.a.80}}.
+
+\bibitem{draschkow2017}
+D.~Draschkow, M.~L.-H. V{\~{o}}, Scene grammar shapes the way we interact with
+  objects, strengthens memories, and speeds search, Scientific Reports 7 (2017)
+  16471.
+\newblock \href {https://doi.org/10.1038/s41598-017-16739-x}
+  {\path{doi:10.1038/s41598-017-16739-x}}.
+
+\bibitem{draschkowwolfe2014}
+D.~Draschkow, J.~M. Wolfe, M.~L.-H. V{\~{o}}, Seek and you shall remember:
+  scene semantics interact with visual search to build better memories, Journal
+  of Vision 14~(8) (2014) 10.
+\newblock \href {https://doi.org/10.1167/14.8.10} {\path{doi:10.1167/14.8.10}}.
+
+\bibitem{vohenderson2009}
+M.~L.-H. V{\~{o}}, J.~M. Henderson, Does gravity matter? effects of semantic
+  and syntactic inconsistencies on the allocation of attention during scene
+  perception, Journal of Vision 9~(3) (2009) 24.
+\newblock \href {https://doi.org/10.1167/9.3.24} {\path{doi:10.1167/9.3.24}}.
+
+\bibitem{woodmanluck2003}
+G.~F. Woodman, S.~J. Luck, Serial deployment of attention during visual search,
+  Journal of Experimental Psychology: Human Perception and Performance 29~(1)
+  (2003) 121--138.
+\newblock \href {https://doi.org/10.1037/0096-1523.29.1.121}
+  {\path{doi:10.1037/0096-1523.29.1.121}}.
+
+\bibitem{polich2007}
+J.~Polich, Updating {P}300: An integrative theory of {P}3a and {P}3b, Clinical
+  Neurophysiology 118~(10) (2007) 2128--2148.
+\newblock \href {https://doi.org/10.1016/j.clinph.2007.04.019}
+  {\path{doi:10.1016/j.clinph.2007.04.019}}.
+
+\bibitem{gramfort2013}
+A.~Gramfort, M.~Luessi, E.~Larson, D.~A. Engemann, D.~Strohmeier, C.~Brodbeck,
+  R.~Goj, M.~Jas, T.~Brooks, L.~Parkkonen, M.~H{\"a}m{\"a}l{\"a}inen, {MEG} and
+  {EEG} data analysis with {MNE}-{P}ython, Frontiers in Neuroscience 7 (2013)
+  267.
+\newblock \href {https://doi.org/10.3389/fnins.2013.00267}
+  {\path{doi:10.3389/fnins.2013.00267}}.
+
+\bibitem{delormemakeig2004}
+A.~Delorme, S.~Makeig, {EEGLAB}: an open source toolbox for analysis of
+  single-trial {EEG} dynamics including independent component analysis, Journal
+  of Neuroscience Methods 134~(1) (2004) 9--21.
+\newblock \href {https://doi.org/10.1016/j.jneumeth.2003.10.009}
+  {\path{doi:10.1016/j.jneumeth.2003.10.009}}.
+
+\bibitem{jas2017}
+M.~Jas, D.~A. Engemann, Y.~Bekhti, F.~Raimondo, A.~Gramfort, Autoreject:
+  Automated artifact rejection for {MEG} and {EEG} data, NeuroImage 159 (2017)
+  417--429.
+\newblock \href {https://doi.org/10.1016/j.neuroimage.2017.06.030}
+  {\path{doi:10.1016/j.neuroimage.2017.06.030}}.
+
+\bibitem{he2020}
+H.~He, D.~Wu, Transfer learning for brain-computer interfaces: A {E}uclidean
+  space data alignment approach, IEEE Transactions on Biomedical Engineering
+  67~(2) (2020) 399--410.
+\newblock \href {https://doi.org/10.1109/TBME.2019.2913914}
+  {\path{doi:10.1109/TBME.2019.2913914}}.
+
+\bibitem{barachant2012}
+A.~Barachant, S.~Bonnet, M.~Congedo, C.~Jutten, Multiclass brain-computer
+  interface classification by {R}iemannian geometry, IEEE Transactions on
+  Biomedical Engineering 59~(4) (2012) 920--928.
+\newblock \href {https://doi.org/10.1109/TBME.2011.2172210}
+  {\path{doi:10.1109/TBME.2011.2172210}}.
+
+\bibitem{congedo2017}
+M.~Congedo, A.~Barachant, R.~Bhatia, Riemannian geometry for {EEG}-based
+  brain-computer interfaces; a primer and a review, Brain-Computer Interfaces
+  4~(3) (2017) 155--174.
+\newblock \href {https://doi.org/10.1080/2326263X.2017.1297192}
+  {\path{doi:10.1080/2326263X.2017.1297192}}.
+
+\bibitem{yger2017}
+F.~Yger, M.~Berar, F.~Lotte, Riemannian approaches in brain-computer
+  interfaces: A review, IEEE Transactions on Neural Systems and Rehabilitation
+  Engineering 25~(10) (2017) 1753--1762.
+\newblock \href {https://doi.org/10.1109/TNSRE.2016.2627016}
+  {\path{doi:10.1109/TNSRE.2016.2627016}}.
+
+\bibitem{barachant2013}
+A.~Barachant, S.~Bonnet, M.~Congedo, C.~Jutten, Classification of covariance
+  matrices using a {R}iemannian-based kernel for {BCI} applications,
+  Neurocomputing 112 (2013) 172--178.
+\newblock \href {https://doi.org/10.1016/j.neucom.2012.12.039}
+  {\path{doi:10.1016/j.neucom.2012.12.039}}.
+
+\bibitem{koles1991}
+Z.~J. Koles, The quantitative extraction and topographic mapping of the
+  abnormal components in the clinical {EEG}, Electroencephalography and
+  Clinical Neurophysiology 79~(6) (1991) 440--447.
+\newblock \href {https://doi.org/10.1016/0013-4694(91)90163-X}
+  {\path{doi:10.1016/0013-4694(91)90163-X}}.
+
+\bibitem{ramoser2000}
+H.~Ramoser, J.~M{\"u}ller-Gerking, G.~Pfurtscheller, Optimal spatial filtering
+  of single trial {EEG} during imagined hand movement, IEEE Transactions on
+  Rehabilitation Engineering 8~(4) (2000) 441--446.
+\newblock \href {https://doi.org/10.1109/86.895946}
+  {\path{doi:10.1109/86.895946}}.
+
+\bibitem{blankertz2008}
+B.~Blankertz, R.~Tomioka, S.~Lemm, M.~Kawanabe, K.-R. M{\"u}ller, Optimizing
+  spatial filters for robust {EEG} single-trial analysis, IEEE Signal
+  Processing Magazine 25~(1) (2008) 41--56.
+\newblock \href {https://doi.org/10.1109/MSP.2008.4408441}
+  {\path{doi:10.1109/MSP.2008.4408441}}.
+
+\bibitem{lotteguan2011}
+F.~Lotte, C.~Guan, Regularizing common spatial patterns to improve {BCI}
+  designs: Unified theory and new algorithms, IEEE Transactions on Biomedical
+  Engineering 58~(2) (2011) 355--362.
+\newblock \href {https://doi.org/10.1109/TBME.2010.2082539}
+  {\path{doi:10.1109/TBME.2010.2082539}}.
+
+\bibitem{jolliffe2016}
+I.~T. Jolliffe, J.~Cadima, Principal component analysis: a review and recent
+  developments, Philosophical Transactions of the Royal Society A 374~(2065)
+  (2016) 20150202.
+\newblock \href {https://doi.org/10.1098/rsta.2015.0202}
+  {\path{doi:10.1098/rsta.2015.0202}}.
+
+\bibitem{ledoitwolf2004}
+O.~Ledoit, M.~Wolf, A well-conditioned estimator for large-dimensional
+  covariance matrices, Journal of Multivariate Analysis 88~(2) (2004) 365--411.
+\newblock \href {https://doi.org/10.1016/S0047-259X(03)00096-4}
+  {\path{doi:10.1016/S0047-259X(03)00096-4}}.
+
+\bibitem{friedman1989}
+J.~H. Friedman, Regularized discriminant analysis, Journal of the American
+  Statistical Association 84~(405) (1989) 165--175.
+\newblock \href {https://doi.org/10.2307/2289860} {\path{doi:10.2307/2289860}}.
+
+\bibitem{blankertz2011}
+B.~Blankertz, S.~Lemm, M.~Treder, S.~Haufe, K.-R. M{\"u}ller, Single-trial
+  analysis and classification of {ERP} components---a tutorial, NeuroImage
+  56~(2) (2011) 814--825.
+\newblock \href {https://doi.org/10.1016/j.neuroimage.2010.06.048}
+  {\path{doi:10.1016/j.neuroimage.2010.06.048}}.
+
+\bibitem{shenoy2006}
+P.~Shenoy, M.~Krauledat, B.~Blankertz, R.~P.~N. Rao, K.-R. M{\"u}ller, Towards
+  adaptive classification for {BCI}, Journal of Neural Engineering 3~(1) (2006)
+  R13--R23.
+\newblock \href {https://doi.org/10.1088/1741-2560/3/1/R02}
+  {\path{doi:10.1088/1741-2560/3/1/R02}}.
+
+\bibitem{vidaurre2011}
+C.~Vidaurre, C.~Sannelli, K.-R. M{\"u}ller, B.~Blankertz, Co-adaptive
+  calibration to improve {BCI} efficiency, Journal of Neural Engineering 8~(2)
+  (2011) 025009.
+\newblock \href {https://doi.org/10.1088/1741-2560/8/2/025009}
+  {\path{doi:10.1088/1741-2560/8/2/025009}}.
+
+\bibitem{samek2013}
+W.~Samek, F.~C. Meinecke, K.-R. M{\"u}ller, Transferring subspaces between
+  subjects in brain-computer interfacing, IEEE Transactions on Biomedical
+  Engineering 60~(8) (2013) 2289--2298.
+\newblock \href {https://doi.org/10.1109/TBME.2013.2253608}
+  {\path{doi:10.1109/TBME.2013.2253608}}.
+
+\bibitem{jayaram2016}
+V.~Jayaram, M.~Alamgir, Y.~Altun, B.~Sch{\"o}lkopf, M.~Grosse-Wentrup, Transfer
+  learning in brain-computer interfaces, IEEE Computational Intelligence
+  Magazine 11~(1) (2016) 20--31.
+\newblock \href {https://doi.org/10.1109/MCI.2015.2501545}
+  {\path{doi:10.1109/MCI.2015.2501545}}.
+
+\bibitem{nosek2015}
+B.~A. Nosek, G.~Alter, G.~C. Banks, D.~Borsboom, S.~D. Bowman, S.~J. Breckler,
+  S.~Buck, C.~D. Chambers, G.~Chin, G.~Christensen, M.~Contestabile, A.~Dafoe,
+  E.~Eich, J.~Freese, R.~Glennerster, D.~Goroff, D.~P. Green, B.~Hesse,
+  M.~Humphreys, J.~Ishiyama, D.~Karlan, A.~Kraut, A.~Lupia, P.~Mabry, T.~Madon,
+  N.~Malhotra, E.~Mayo-Wilson, M.~McNutt, E.~Miguel, E.~L. Paluck,
+  U.~Simonsohn, C.~Soderberg, B.~A. Spellman, J.~Turitto, G.~VandenBos,
+  S.~Vazire, E.~J. Wagenmakers, R.~Wilson, T.~Yarkoni, Promoting an open
+  research culture, Science 348~(6242) (2015) 1422--1425.
+\newblock \href {https://doi.org/10.1126/science.aab2374}
+  {\path{doi:10.1126/science.aab2374}}.
+
+\bibitem{chambers2013}
+C.~D. Chambers, Registered reports: A new publishing initiative at {C}ortex,
+  Cortex 49~(3) (2013) 609--610.
+\newblock \href {https://doi.org/10.1016/j.cortex.2012.12.016}
+  {\path{doi:10.1016/j.cortex.2012.12.016}}.
+
+\bibitem{brodersen2010}
+K.~H. Brodersen, C.~S. Ong, K.~E. Stephan, J.~M. Buhmann, The balanced accuracy
+  and its posterior distribution, in: 2010 20th International Conference on
+  Pattern Recognition, 2010, pp. 3121--3124.
+\newblock \href {https://doi.org/10.1109/ICPR.2010.764}
+  {\path{doi:10.1109/ICPR.2010.764}}.
+
+\bibitem{pallerkutas1992}
+K.~A. Paller, M.~Kutas, Brain potentials during memory retrieval provide
+  neurophysiological support for the distinction between conscious recollection
+  and priming, Journal of Cognitive Neuroscience 4~(4) (1992) 375--392.
+\newblock \href {https://doi.org/10.1162/jocn.1992.4.4.375}
+  {\path{doi:10.1162/jocn.1992.4.4.375}}.
+
+\bibitem{curran2000}
+T.~Curran, Brain potentials of recollection and familiarity, Memory \&
+  Cognition 28~(6) (2000) 923--938.
+\newblock \href {https://doi.org/10.3758/BF03209340}
+  {\path{doi:10.3758/BF03209340}}.
+
+\bibitem{nicholsholmes2002}
+T.~E. Nichols, A.~P. Holmes, Nonparametric permutation tests for functional
+  neuroimaging: A primer with examples, Human Brain Mapping 15~(1) (2002)
+  1--25.
+\newblock \href {https://doi.org/10.1002/hbm.1058}
+  {\path{doi:10.1002/hbm.1058}}.
+
+\bibitem{greenwald1976}
+A.~G. Greenwald, Within-subjects designs: To use or not to use?, Psychological
+  Bulletin 83~(2) (1976) 314--320.
+\newblock \href {https://doi.org/10.1037/0033-2909.83.2.314}
+  {\path{doi:10.1037/0033-2909.83.2.314}}.
+
+\bibitem{markiewicz2021}
+C.~J. Markiewicz, K.~J. Gorgolewski, F.~Feingold, R.~Blair, Y.~O. Halchenko,
+  E.~Miller, N.~Hardcastle, J.~Wexler, O.~Esteban, M.~Goncalves, A.~Jwa,
+  R.~Poldrack, The {O}pen{N}euro resource for sharing of neuroscience data,
+  eLife 10 (2021) e71774.
+\newblock \href {https://doi.org/10.7554/eLife.71774}
+  {\path{doi:10.7554/eLife.71774}}.
+
+\bibitem{gorgolewski2016}
+K.~J. Gorgolewski, T.~Auer, V.~D. Calhoun, R.~C. Craddock, S.~Das, E.~P. Duff,
+  G.~Flandin, S.~S. Ghosh, T.~Glatard, Y.~O. Halchenko, D.~A. Handwerker,
+  M.~Hanke, D.~Keator, X.~Li, Z.~Michael, C.~Maumet, B.~N. Nichols, T.~E.
+  Nichols, J.~Pellman, J.-B. Poline, A.~Rokem, G.~Schaefer, V.~Sochat,
+  W.~Triplett, J.~A. Turner, G.~Varoquaux, R.~A. Poldrack, The brain imaging
+  data structure, a format for organizing and describing outputs of
+  neuroimaging experiments, Scientific Data 3 (2016) 160044.
+\newblock \href {https://doi.org/10.1038/sdata.2016.44}
+  {\path{doi:10.1038/sdata.2016.44}}.
+
+\end{thebibliography}

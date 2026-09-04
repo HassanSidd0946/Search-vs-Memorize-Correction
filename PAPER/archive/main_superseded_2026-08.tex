@@ -1,0 +1,383 @@
+% ============================================================
+% SUPERSEDED 2026-08-20 -- DO NOT USE OR REVISE.
+%
+% This manuscript describes the Search-vs-Memorize contrast as a
+% subject-independent EEG decoding result (headline ~71%, LOSO
+% evaluation). A structured audit (see ../AUDIT.md, ../DECISIONS.md,
+% ../STATUS.md, ../results/SYNTHESIS.md in the repository root)
+% established that this dataset does not, in fact, support that claim:
+%
+%   - Cross-subject (pre-calibration) accuracy on the Search-vs-Memorize
+%     contrast never leaves chance (0.4839-0.5303) across five
+%     structurally different test configurations -- there is no
+%     subject-general representation of task identity in these
+%     features. The reported ~71% figure is produced entirely by a
+%     15%-per-subject calibration step the manuscript does not
+%     describe; the protocol is few-shot subject-adaptive, not
+%     subject-independent as written here.
+%   - A pseudo-label carrying ZERO task content (early/late split
+%     within one task block) reaches the same calibrated accuracy as
+%     the real contrast (0.7112 vs 0.7078) at matched design.
+%   - A large, universal (30/30 subjects) self-paced rest-break
+%     discontinuity was identified at approximately trial 50 of every
+%     task block; excluding it collapses every pseudo-label dose-
+%     response curve to chance at every scale tested.
+%   - A confound-free control (subsequent memory, remembered vs.
+%     forgotten, within-block/within-task/within-stimulus-set) found no
+%     detectable cognitive signal -- underpowered (0-18% minority
+%     trials/subject), not a positive result to substitute in.
+%
+% Phase 3 (finishing this manuscript) is CANCELLED as originally scoped.
+% This file is retained, unrevised, for the audit trail only. The
+% active manuscript effort is ../outline.md (outline stage, pre-
+% drafting, as of 2026-08-20) for a new paper describing the rest-break
+% discontinuity / calibration-artifact finding itself.
+%
+% This is a self-audit of our own analysis pipeline applied to a public
+% dataset (ds005189, Helbing, Draschkow & Vo, 2025). Nothing here is a
+% claim about the original dataset authors' own published findings,
+% which this audit does not evaluate or contest.
+% ============================================================
+
+\documentclass[journal]{IEEEtran}
+
+% ============================================================
+% Packages
+% ============================================================
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+% Figures live in ../Diagrams relative to this file (PAPER/main.tex).
+\graphicspath{{../Diagrams/}}
+
+\begin{document}
+
+% ============================================================
+% Title / Authors
+% ============================================================
+\title{Spatiotemporal Riemannian Mamba: An Asymmetric Dual-Branch Architecture for Single-Trial EEG Memory Decoding}
+
+\author{
+    Muhammad~Hassan~Siddiqui,~\IEEEmembership{Student Member,~IEEE},
+    Co-Author~Name~Two,~\IEEEmembership{Member,~IEEE},
+    and~Co-Author~Name~Three,~\IEEEmembership{Senior Member,~IEEE}
+    \thanks{M.~H.~Siddiqui is with the Department of Computer Science, University of Central Punjab, Lahore, Pakistan (e-mail: hassan.siddiqui@ucp.edu.pk).}
+    \thanks{Co-Author Name Two and Co-Author Name Three are with [Affiliation Placeholder -- Department, University/Institute, City, Country].}
+    \thanks{Manuscript submitted XXXX; revised XXXX.}
+}
+
+\markboth{IEEE Transactions on Neural Systems and Rehabilitation Engineering, Vol.~XX, No.~XX, 2026}%
+{Siddiqui \MakeLowercase{\textit{et al.}}: Spatiotemporal Riemannian Mamba for Single-Trial EEG Memory Decoding}
+
+\maketitle
+
+% ============================================================
+% Abstract
+% ============================================================
+\begin{abstract}
+Whether a moment of experience is destined to become a lasting memory or to dissolve into forgetting is, remarkably, a decision the brain appears to make at the instant of encoding. Recovering this decision from single-trial electroencephalography (EEG) is a challenging brain-computer interface (BCI) problem: the discriminative signal is spatially diffuse, temporally subtle, and buried beneath inter-subject anatomical and electrophysiological variability so severe that models trained on one individual routinely fail on the next. In this paper, we introduce an end-to-end pipeline, \emph{Spatiotemporal Riemannian Mamba}, that confronts this variability head-on using the geometry of the problem rather than brute-force data volume. Raw 62-channel EEG is mapped to spatial covariance matrices, whitened via pooled Euclidean Alignment (EA) to a common reference that collapses subject-specific ``islands'' in feature space, and projected through the Log-Euclidean map onto a 1953-dimensional tangent-space vector. This representation is passed through a novel \emph{asymmetric} dual-branch architecture that pairs the high-dimensional, information-dense spatial branch with a lightweight, genuinely-trained parallel-scan Mamba state-space branch for temporal structure, fused by simple concatenation and calibrated jointly via PCA and shrinkage regularization. Under a strict subject-independent Leave-One-Subject-Out (LOSO) protocol across 29 subjects -- the most conservative evaluation a BCI classifier can face -- the proposed pipeline attains 71.28\% mean accuracy, a substantial improvement over a calibrated EEGNet baseline (52.53\% zero-shot). Crucially, we do not stop at the headline number: a matched-control ablation, in which the Mamba branch is surgically removed while holding the spatial pipeline byte-identical, isolates the individual contribution of each architectural component and is evaluated with a paired Wilcoxon signed-rank test. We report this analysis with full transparency, including the finding that the Riemannian spatial features -- not the temporal branch -- account for the dominant share of the measured gain, and we discuss what this implies for the design of future spatiotemporal BCI architectures.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Brain-computer interface, electroencephalography, memory encoding, Riemannian geometry, symmetric positive-definite manifolds, tangent space, Mamba, selective state-space models, Leave-One-Subject-Out cross-validation, deep learning.
+\end{IEEEkeywords}
+
+% ============================================================
+% I. Introduction
+% ============================================================
+\section{Introduction}
+
+\IEEEPARstart{E}{very} experience that reaches the brain faces a fork in the road: it will either be consolidated into memory, available for later recall, or it will be lost, indistinguishable in the future from something that never happened at all. Cognitive neuroscience has long known that this fork is not decided passively during sleep or rehearsal alone -- subtle differences in the neural state \emph{at the moment of encoding} predict, above chance, whether an item will later be remembered or forgotten \cite{paller2002observing,rugg2007event}. If this ``subsequent memory effect'' is decodable from non-invasive electroencephalography (EEG) on a single trial, it opens the door to real-time cognitive-state monitoring, adaptive learning systems, and clinical memory assessment tools that do not require implanted electrodes. This is the problem we tackle in this paper: given a single 62-channel EEG trial recorded during encoding, decode whether the underlying memory trace will be \emph{true} (successfully encoded) or \emph{false} (encoded incorrectly or forgotten).
+
+The obstacle standing between this goal and a deployable system is, in a word, variability. EEG signals are notoriously low in signal-to-noise ratio, and the spatial topography of a cognitively meaningful signal for one subject can look wildly different from the same signal in another subject, due to differences in skull thickness, cortical folding, electrode impedance, and idiosyncratic strategy use. A classifier trained naively across subjects does not merely underperform -- it can fail to generalize almost entirely, because the between-subject variance in raw feature space dwarfs the between-class variance the classifier is actually trying to learn. This is the \emph{villain} of our story: inter-subject non-stationarity, compounded by low SNR, that has historically forced BCI systems into subject-specific calibration sessions incompatible with practical, walk-up-and-use deployment.
+
+Two lines of research offer complementary weapons against this villain, and both are heroes of this paper. The first is \emph{Riemannian geometry}. Rather than treating EEG channels as an arbitrary Euclidean feature vector, we can represent each trial by its spatial covariance matrix -- a point on the manifold of symmetric positive-definite (SPD) matrices -- and exploit the rich geometric structure of that manifold to align subjects to a common reference frame before any classifier ever sees the data \cite{barachant2012multiclass,congedo2017riemannian,yger2017review}. Euclidean Alignment (EA), in particular, provides a simple yet remarkably effective whitening transformation that recenters every subject's covariance distribution around a shared identity reference \cite{he2020transfer,zanini2018transfer}, directly attacking the inter-subject variability problem at its geometric root rather than hoping a downstream classifier will learn it away from data alone.
+
+The second hero is \emph{selective state-space modeling}, embodied by the recently introduced Mamba architecture \cite{gu2023mamba}. Where recurrent networks such as LSTMs \cite{hochreiter1997long} process sequences step-by-step at $O(L)$ sequential cost, and Transformers \cite{vaswani2017attention} trade that sequential bottleneck for $O(L^2)$ attention, structured state-space models built on the HiPPO framework \cite{gu2020hippo} and formalized in S4 \cite{gu2022efficiently} and its successors \cite{smith2023simplified,poli2023hyena,tay2021long} achieve linear-time sequence modeling via a hardware-aware parallel scan. Mamba extends this line of work with an input-dependent \emph{selection} mechanism, allowing the model to dynamically decide what to remember and what to forget as a function of the input itself -- a property that resonates almost poetically with a paper about memory. Applying this machinery to physiological time series, and specifically to EEG memory decoding, remains largely unexplored territory.
+
+Our central methodological wager is that these two heroes are complementary rather than redundant: Riemannian geometry excels at collapsing \emph{spatial} inter-subject variability, while Mamba is purpose-built for efficient \emph{temporal} sequence modeling. Naively combining them, however, is not free of pitfalls. In preliminary experiments (discussed further in Section~\ref{sec:methodology}), we found that a symmetric dual-branch design -- one that compresses the high-dimensional spatial tangent-space representation through a learned bottleneck before fusing it, on equal footing, with a temporal embedding -- catastrophically destroys spatial information and regresses performance below the spatial-only baseline. This observation motivated the \emph{asymmetric} architecture that is the central technical contribution of this paper: the spatial branch remains raw and high-dimensional (1953-D), while the temporal branch remains deliberately lightweight, and the two are fused by simple concatenation rather than symmetric pooling, with joint compression deferred to a calibration stage \emph{after} fusion.
+
+The contributions of this paper are as follows:
+\begin{itemize}
+    \item We design an end-to-end pipeline that maps raw multichannel EEG to a subject-aligned, calibrated tangent-space representation via pooled Euclidean Alignment, explicitly diagnosing and correcting a leaky, self-disclosed tangent-space reference mismatch that we discovered during our own internal audit of an earlier version of this pipeline.
+    \item We propose a novel asymmetric dual-branch fusion architecture that couples an uncompressed Riemannian spatial branch with a compact, genuinely-trained parallel-scan Mamba temporal branch, and we document the specific symmetric-fusion failure mode that motivated this design.
+    \item We evaluate the full pipeline under a strict 29-fold Leave-One-Subject-Out protocol, reporting not only the headline accuracy but a matched-control ablation with a paired Wilcoxon significance test that honestly attributes the source of the pipeline's performance gain between its spatial and temporal components.
+    \item We release a mathematically complete formulation of every stage of the pipeline -- from shrinkage-regularized covariance estimation through the discretized selective state-space recurrence -- intended to make the architecture fully reproducible.
+\end{itemize}
+
+The remainder of this article is organized as follows: Section~\ref{sec:related} navigates the surrounding literature across three converging threads -- deep learning for BCI, Riemannian geometry on SPD manifolds, and the rise of state-space sequence models -- situating our contribution at their intersection. Section~\ref{sec:methodology} unveils our mathematical formulation, walking from raw signal to calibrated prediction while motivating every design decision with the empirical failure mode or geometric intuition that produced it. Section~\ref{sec:results} subjects the proposed pipeline to rigorous, leakage-free experimental scrutiny, including subject-wise analysis, feature-space visualization, and a transparent statistical attribution of where the model's gains actually come from. Finally, Section~\ref{sec:conclusion} concludes the paper and charts a course for future work, including multi-modal fusion, attention-based branch merging, and real-time edge deployment.
+
+% ============================================================
+% II. Related Work
+% ============================================================
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Deep Learning in Brain-Computer Interfaces}
+Convolutional neural networks tailored to the structure of EEG -- narrow temporal filters followed by spatial (depthwise) filters -- have become the default deep-learning baseline for BCI decoding. EEGNet \cite{lawhern2018eegnet} popularized this compact, parameter-efficient design, while deeper architectures such as DeepConvNet and ShallowConvNet \cite{schirrmeister2017deep} demonstrated that carefully regularized convolutional stacks can rival handcrafted feature pipelines within-subject. Comprehensive reviews \cite{craik2019deep,roy2019deep,lotte2018review} chart the rapid growth of this literature, while more recent work has begun to hybridize convolution with attention, as in the EEG Conformer \cite{song2022eeg}, seeking to combine local feature extraction with longer-range temporal context. A near-universal finding across this literature, however, is that purely data-driven convolutional models generalize poorly across subjects without recalibration \cite{wu2022transfer} -- precisely the failure mode that motivates the geometric alignment strategy adopted in this paper.
+
+\subsection{Riemannian Geometry on SPD Manifolds}
+An alternative -- and, for cross-subject transfer, often superior -- strategy represents each EEG trial not as a raw waveform but as a spatial covariance matrix, a point on the Riemannian manifold of symmetric positive-definite (SPD) matrices. Foundational work by Barachant \emph{et al.} \cite{barachant2012multiclass,barachant2013classification} showed that classifiers operating directly on this manifold, or on its tangent-space projection, substantially outperform Euclidean feature engineering such as Common Spatial Patterns \cite{blankertz2008optimizing,ang2008filter,grossewentrup2008multiclass} for motor-imagery BCI. The differential-geometric machinery underlying these methods -- geometric means of SPD matrices \cite{moakher2005differential} and the broader Riemannian tensor-computing framework \cite{pennec2006riemannian} -- provides principled tools for aligning distributions of covariance matrices across sessions and subjects. Building on this foundation, Euclidean Alignment \cite{he2020transfer} and Riemannian Procrustes Analysis \cite{rodrigues2019riemannian} offer lightweight, unsupervised whitening transformations that recenter a subject's covariance distribution toward a shared reference \emph{before} any classifier is trained, and Zanini \emph{et al.} \cite{zanini2018transfer} cast this recentering explicitly as a transfer-learning problem. Riemannian methods have since been extended across BCI paradigms, from SSVEP \cite{kalunga2016online} to manifold-regression decoding of continuous MEG/EEG signals \cite{sabbagh2019manifold}, and comprehensively reviewed in \cite{congedo2017riemannian,yger2017review}. Our pipeline builds directly on this line of work, adopting pooled Euclidean Alignment and Log-Euclidean tangent-space projection as its spatial backbone.
+
+\subsection{State-Space Models: From S4 to Mamba}
+Recurrent architectures such as the LSTM \cite{hochreiter1997long} and GRU \cite{cho2014learning} model sequences with $O(L)$ sequential recurrence, while the Transformer \cite{vaswani2017attention} replaced recurrence with $O(L^2)$ self-attention, trading sequential latency for quadratic compute. Structured state-space sequence models emerged as a third path: built on the HiPPO theory of optimal online function approximation \cite{gu2020hippo}, the S4 model \cite{gu2022efficiently} demonstrated that a linear state-space recurrence, parameterized appropriately and computed via a hardware-aware convolution or parallel scan, can match or exceed attention on extremely long sequences, as benchmarked on the Long Range Arena \cite{tay2021long}. Follow-on work simplified and generalized this formulation, including S5 \cite{smith2023simplified}, Hyena \cite{poli2023hyena}, and linear-attention reformulations of the Transformer itself \cite{katharopoulos2020transformers}. Mamba \cite{gu2023mamba} introduced a \emph{selective} state-space mechanism in which the discretization step size and input/output projection matrices become functions of the input itself, closing much of the modeling gap with attention while retaining linear-time, parallel-scan computation; its structured state-space duality was later formalized in Mamba-2 \cite{dao2024transformers}, and the architecture has since been adapted to vision \cite{zhu2024vision}. Despite this rapid progress, the application of selective state-space models to physiological time series -- and to EEG memory decoding in particular -- remains largely open, which is the gap this paper addresses.
+
+% ============================================================
+% III. Proposed Methodology
+% ============================================================
+\section{Proposed Methodology}
+\label{sec:methodology}
+
+\subsection{Pipeline Overview}
+Fig.~\ref{fig:pipeline} illustrates the full end-to-end pipeline. Raw 62-channel EEG is converted into a spatial covariance matrix, whitened via pooled Euclidean Alignment, projected into a 1953-dimensional Log-Euclidean tangent-space vector, and classified by the proposed asymmetric dual-branch Mamba network into a binary True Memory / False Memory prediction. Table~\ref{tab:dimensions} summarizes the representation and dimensionality at every stage of this pipeline. We now derive each stage mathematically, motivating every equation with the empirical or geometric reasoning that led us to it.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{Fig6_Overall_Pipeline.png}
+\caption{End-to-end Riemannian-Mamba BCI decoding pipeline. Raw 62-channel EEG is converted to spatial covariance matrices, whitened via pooled Euclidean Alignment (EA), projected into a 1953-dimensional tangent-space vector, and classified by the asymmetric dual-branch Mamba network into True Memory (Class 1) or False Memory (Class 0).}
+\label{fig:pipeline}
+\end{figure*}
+
+\subsection{Spatial Covariance Matrix Estimation with Shrinkage}
+For a single trial $i$ with $n=62$ channels and $T$ time samples, let $X_i \in \mathbb{R}^{n \times T}$ denote the (band-pass filtered, epoched) signal matrix. The sample spatial covariance is
+\begin{equation}
+\hat{S}_i = \frac{1}{T-1} \sum_{t=1}^{T} \big(x_{i,t} - \bar{x}_i\big)\big(x_{i,t} - \bar{x}_i\big)^{\top},
+\label{eq:sample_cov}
+\end{equation}
+where $x_{i,t} \in \mathbb{R}^n$ is the channel vector at time $t$ and $\bar{x}_i$ is its temporal mean. In the regime where $T$ is not overwhelmingly larger than $n$, $\hat{S}_i$ is often ill-conditioned or even rank-deficient, which is fatal for any downstream operation that requires matrix inversion or a matrix logarithm -- both of which our pipeline requires. We therefore apply Ledoit-Wolf-style shrinkage regularization \cite{ledoit2004well} toward a scaled identity target:
+\begin{equation}
+\hat{C}_i = (1-\lambda)\,\hat{S}_i \;+\; \lambda \, \frac{\operatorname{tr}(\hat{S}_i)}{n} \, I_n,
+\label{eq:shrinkage_cov}
+\end{equation}
+with shrinkage coefficient $\lambda = 0.10$. This guarantees $\hat{C}_i \succ 0$ (strictly SPD) by construction, placing every trial safely on the interior of the SPD manifold and ensuring the tangent-space mapping introduced in Section~\ref{sec:tangent} is well-defined for every trial without exception.
+
+\subsection{The Subject-Islands Problem and Pooled Euclidean Alignment}
+Before describing the alignment mathematics, it is worth dwelling on \emph{why} this step is indispensable. Fig.~\ref{fig:tsne} visualizes a 3D t-SNE \cite{vandermaaten2008visualizing} embedding of unaligned tangent-space features, colored first by class label and then by subject identity. Panel (B) shows the class-colored embedding: True and False Memory trials are almost entirely entangled, with no visually separable structure. Panel (C) recolors the \emph{exact same coordinates} by subject identity, and the picture changes completely -- the data resolves into tight, well-separated ``subject islands.'' In other words, at the population level, \emph{which subject produced a trial is a far stronger signal in raw feature space than which class that trial belongs to}. Any classifier trained across subjects without correcting for this will overwhelmingly learn to recognize subjects, not memory outcomes, and will fail catastrophically on a held-out subject it has never seen. This is the single most important empirical justification for the alignment step described below.
+
+Pooled Euclidean Alignment addresses the subject-islands problem by whitening every training-set covariance matrix toward a common pooled reference, computed once as the arithmetic (Euclidean) mean over all available training covariance matrices,
+\begin{equation}
+\bar{C}_{\mathrm{ref}} = \frac{1}{N} \sum_{i=1}^{N} \hat{C}_i ,
+\label{eq:pooled_mean}
+\end{equation}
+and then applying the symmetric whitening transformation
+\begin{equation}
+C_i^{\mathrm{EA}} = \bar{C}_{\mathrm{ref}}^{-1/2} \; \hat{C}_i \; \bar{C}_{\mathrm{ref}}^{-1/2},
+\label{eq:ea_whitening}
+\end{equation}
+where $\bar{C}_{\mathrm{ref}}^{-1/2}$ is computed via the eigendecomposition of $\bar{C}_{\mathrm{ref}}$. Under strict LOSO evaluation, $\bar{C}_{\mathrm{ref}}$ is recomputed at every fold using only the 28 training subjects, so that no information about the held-out test subject ever leaks into the reference used to align it -- a leakage-free design we verified explicitly after discovering, during an internal audit, that an earlier version of this pipeline had inadvertently fit its tangent-space reference across all 29 subjects simultaneously (see Section~\ref{sec:matched_control}).
+
+\subsection{Log-Euclidean Tangent-Space Projection}
+\label{sec:tangent}
+The whitened covariance matrices $C_i^{\mathrm{EA}}$ now live on the curved SPD manifold, where Euclidean distances are geometrically meaningless and standard classifiers cannot be applied directly. The Log-Euclidean framework \cite{pennec2006riemannian,barachant2013classification} resolves this by mapping each SPD matrix onto the flat tangent space at the identity reference via the matrix logarithm,
+\begin{equation}
+L_i = \log\!\big(C_i^{\mathrm{EA}}\big) = U \, \mathrm{diag}\big(\log \sigma_1, \ldots, \log \sigma_n\big) \, U^{\top},
+\label{eq:matrix_log}
+\end{equation}
+where $C_i^{\mathrm{EA}} = U \, \mathrm{diag}(\sigma_1, \ldots, \sigma_n) \, U^{\top}$ is the eigendecomposition. Since $L_i$ is symmetric, it is fully described by its upper-triangular entries; we vectorize it using the standard weighted half-vectorization that preserves the Log-Euclidean metric norm,
+\begin{multline}
+S_i = \mathrm{vec}_{\triangle}(L_i) = \big[\, L_{i,11}, \ldots, L_{i,nn}, \\ \sqrt{2}\,L_{i,12}, \sqrt{2}\,L_{i,13}, \ldots \big]^{\top} \in \mathbb{R}^{d},
+\label{eq:tangent_vec}
+\end{multline}
+with the $\sqrt{2}$ weighting applied to every off-diagonal entry. The resulting dimensionality is
+\begin{equation}
+d = \frac{n(n+1)}{2} = \frac{62 \times 63}{2} = 1953,
+\label{eq:tangent_dim}
+\end{equation}
+which is not a coincidence but a direct consequence of $n = 62$ recording channels -- every distinct pairwise channel relationship, plus every channel's own variance, is preserved exactly once. $S_i \in \mathbb{R}^{1953}$ is the tangent-space feature vector that forms the primary input to the classification network described next.
+
+\subsection{Why Asymmetric? Motivating the Dual-Branch Design}
+A natural instinct upon obtaining both a rich spatial representation ($S_i \in \mathbb{R}^{1953}$) and access to the trial's underlying temporal dynamics is to build a dual-branch network that processes each modality separately before fusing them. Our first attempt at this design was \emph{symmetric}: both branches were compressed to a common low-dimensional embedding (e.g., 32-D) via a learned bottleneck, then fused by symmetric pooling. This design catastrophically regressed accuracy \emph{below} the spatial-only baseline. The diagnosis was straightforward in hindsight: forcing a 1953-dimensional, information-dense Riemannian representation through a 32-dimensional bottleneck destroys the overwhelming majority of the spatial information before the classifier ever has a chance to use it, and symmetric pooling implicitly (and wrongly) tells the network that the compressed spatial and temporal embeddings deserve equal representational capacity.
+
+This failure directly motivates the \emph{asymmetric} architecture proposed in this paper (Fig.~\ref{fig:dualbranch}): the spatial branch is kept raw and uncompressed, while the temporal branch is kept deliberately lightweight, and the two are fused by simple concatenation -- not pooling -- with any joint dimensionality reduction deferred to a calibration stage that operates \emph{after} fusion (Section~\ref{sec:calibration}). Architecturally, the top (global/spatial) branch applies a linear projection followed by two Mamba blocks, while the bottom (local/temporal) branch applies a 1D convolutional front end followed by a single Mamba block -- intentionally one stage shallower, reflecting the comparatively lower intrinsic dimensionality of the temporal dynamics relative to the 1953-D spatial representation. In the minimal configuration that we validate experimentally in Section~\ref{sec:results}, the top branch's linear projection is fit as a near-identity mapping, i.e., the spatial pathway is empirically permitted to remain a raw passthrough of $S_i$, letting the network allocate its limited capacity to the temporal branch rather than re-deriving what the Riemannian geometry has already provided.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{Fig7_DualBranch_Mamba.png}
+\caption{Proposed asymmetric dual-branch Mamba architecture. The top (global/spatial) branch applies a linear projection followed by two Mamba blocks to the raw 1953-D tangent-space input; the bottom (local/temporal) branch applies a 1D convolution followed by a single Mamba block, intentionally one stage shallower than the spatial branch. Both branches are fused via concatenation and passed through a fully connected layer to produce the True Memory / False Memory prediction.}
+\label{fig:dualbranch}
+\end{figure*}
+
+\subsection{Selective State-Space Formulation of the Mamba Branch}
+The temporal branch is built from Mamba blocks \cite{gu2023mamba}, whose continuous-time formulation is a linear time-invariant state-space model,
+\begin{equation}
+\dot{h}(t) = A h(t) + B u(t), \qquad y(t) = C h(t),
+\label{eq:continuous_ssm}
+\end{equation}
+where $u(t) \in \mathbb{R}$ is the input signal, $h(t) \in \mathbb{R}^{d_{\mathrm{state}}}$ is the latent state, and $A \in \mathbb{R}^{d_{\mathrm{state}} \times d_{\mathrm{state}}}$, $B \in \mathbb{R}^{d_{\mathrm{state}} \times 1}$, $C \in \mathbb{R}^{1 \times d_{\mathrm{state}}}$ are learned system matrices. To apply this to discretely sampled EEG-derived sequences, we discretize Eq.~\eqref{eq:continuous_ssm} with a learned step size $\Delta$ using the zero-order hold rule,
+\begin{equation}
+\bar{A} = \exp(\Delta A), \qquad \bar{B} = (\Delta A)^{-1}\big(\exp(\Delta A) - I\big)\,\Delta B,
+\label{eq:discretization}
+\end{equation}
+yielding the discrete-time recurrence
+\begin{equation}
+h_k = \bar{A}\, h_{k-1} + \bar{B}\, u_k, \qquad y_k = C\, h_k .
+\label{eq:discrete_recurrence}
+\end{equation}
+What distinguishes Mamba from earlier structured state-space models such as S4 \cite{gu2022efficiently} is that $B$, $C$, and $\Delta$ are not fixed, but are instead \emph{selective} -- computed as learned functions of the input token itself,
+\begin{equation}
+B_k = s_B(u_k), \qquad C_k = s_C(u_k), \qquad \Delta_k = \tau\big(s_{\Delta}(u_k)\big),
+\label{eq:selection}
+\end{equation}
+where $s_B(\cdot)$, $s_C(\cdot)$, $s_{\Delta}(\cdot)$ are learned linear projections and $\tau(\cdot)$ is a softplus nonlinearity ensuring $\Delta_k > 0$. This input-dependent selectivity allows the model to dynamically decide, at every time step, how much of the past state to retain and how much new input to admit -- an apt computational analogue to the very memory-encoding process this paper aims to decode. Because Eq.~\eqref{eq:discrete_recurrence} is associative, the full sequence $\{h_k\}_{k=1}^{L}$ can be computed via a parallel (work-efficient, $O(\log L)$-depth) associative scan rather than $O(L)$ sequential steps, giving Mamba the training-time parallelism of a convolution with the unbounded-context modeling capacity of a recurrence.
+
+Concretely, in our temporal branch, the 1D-convolutional front end first produces a short sequence of local embeddings from the trial, which is then processed by the (bottom-branch) Mamba block of Eq.~\eqref{eq:discrete_recurrence}, with hidden/state dimensions $d_{\mathrm{model}}=16$ and $d_{\mathrm{state}}=8$, respectively; the final hidden state is pooled to obtain a compact 16-dimensional temporal embedding, $z_{\mathrm{temporal}} \in \mathbb{R}^{16}$.
+
+\subsection{Fusion and Joint Calibration}
+\label{sec:calibration}
+The raw spatial representation and the pooled temporal embedding are fused by direct concatenation,
+\begin{equation}
+z_{\mathrm{fuse}} = \big[\, S_i \;\Vert\; z_{\mathrm{temporal}} \,\big] \in \mathbb{R}^{1953+16} = \mathbb{R}^{1969},
+\label{eq:fusion}
+\end{equation}
+where $\Vert$ denotes concatenation. Only \emph{after} fusion is the representation jointly compressed, via principal component analysis (PCA) \cite{jolliffe2002principal} fit on the training folds,
+\begin{equation}
+z_{\mathrm{PCA}} = W_{35}^{\top}\big(z_{\mathrm{fuse}} - \mu_{\mathrm{fuse}}\big) \in \mathbb{R}^{35},
+\label{eq:pca}
+\end{equation}
+where $W_{35} \in \mathbb{R}^{1969 \times 35}$ contains the top 35 principal components and $\mu_{\mathrm{fuse}}$ is the training-fold mean. The resulting 35-dimensional representation is passed to a shrinkage-regularized linear calibration layer (15\% shrinkage, following the same Ledoit-Wolf principle as Eq.~\eqref{eq:shrinkage_cov}) that produces the final True Memory / False Memory posterior. Deferring compression to \emph{after} fusion, rather than compressing each branch independently beforehand, is precisely what avoids the destructive information bottleneck that caused our earlier symmetric design to fail.
+
+\begin{table}[htbp]
+\centering
+\caption{Pipeline Data Transformations and Dimensionality}
+\label{tab:dimensions}
+\begin{tabular}{@{}llc@{}}
+\toprule
+\textbf{Stage} & \textbf{Representation} & \textbf{Dimension} \\
+\midrule
+Raw EEG signal & Multichannel time series & $62 \times T$ \\
+Spatial covariance & SPD matrix & $62 \times 62$ \\
+EA-whitened covariance & SPD matrix & $62 \times 62$ \\
+Tangent-space vector & Euclidean vector & $1953 \times 1$ \\
+Temporal branch embedding & Pooled Mamba state & $16 \times 1$ \\
+Fused representation & Concatenated vector & $1969 \times 1$ \\
+Calibrated representation & PCA-reduced vector & $35 \times 1$ \\
+Output & Class posterior & $2 \times 1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+% IV. Experiments and Results
+% ============================================================
+\section{Experiments and Results}
+\label{sec:results}
+
+\subsection{Dataset and Evaluation Protocol}
+All experiments use 62-channel EEG recorded during a subsequent-memory encoding paradigm, in which each trial is retrospectively labeled True Memory (Class~1) or False Memory (Class~0) according to later recognition outcome, in the spirit of classical subsequent-memory ERP studies \cite{paller2002observing,curran2000brain,rugg2007event}. We adopt the electrode nomenclature and layout of the extended 10--10 system for all spatial visualizations. All results are reported under a strict subject-independent Leave-One-Subject-Out (LOSO) protocol across 29 subjects: for each fold, one subject is held out entirely for testing, while the remaining 28 subjects are used for fitting the pooled EA reference (Eq.~\eqref{eq:pooled_mean}), the PCA projection (Eq.~\eqref{eq:pca}), and the shrinkage calibration layer, guaranteeing zero test-subject leakage into any stage of the pipeline.
+
+\subsection{Grand Ablation}
+Fig.~\ref{fig:ablation} summarizes the progressive accuracy gains across each stage of the pipeline, from a zero-shot EEGNet baseline \cite{lawhern2018eegnet} through shrinkage calibration, matched Riemannian spatial features, and the full asymmetric Mamba fusion model. The zero-shot EEGNet baseline achieves 52.53\% mean LOSO accuracy -- barely above the 50\% chance level -- underscoring just how severe the inter-subject variability problem described in Section~\ref{sec:methodology} truly is for a purely data-driven convolutional model. Adding shrinkage calibration lifts this to 55.64\%. The single largest jump in the entire pipeline, however, comes from introducing Riemannian tangent-space spatial features with pooled Euclidean Alignment, which alone reaches 70.78\% -- an absolute gain of 15.14 percentage points over the calibrated EEGNet baseline. The full asymmetric Mamba fusion model reaches 71.28\%, a further gain of 0.50 percentage points. Table~\ref{tab:ablation} formalizes this same progression stage by stage, reporting both the incremental gain at each step and the cumulative gain relative to the zero-shot benchmark.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{Fig1_Grand_Ablation.png}
+\caption{Grand ablation of progressive accuracy gains across the proposed pipeline under strict 29-fold LOSO evaluation, from EEGNet zero-shot through EEGNet with shrinkage calibration, matched Riemannian spatial control, and the full asymmetric Mamba fusion model. Gray points show individual per-subject accuracies; the dashed red line indicates the theoretical chance level (50\%).}
+\label{fig:ablation}
+\end{figure*}
+
+\begin{table*}[t]
+\centering
+\caption{Progressive Accuracy Gains Across the Spatiotemporal Pipeline}
+\label{tab:ablation}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+\textbf{Architecture Stage} & \textbf{Components Added} & \textbf{Mean LOSO Acc. (\%)} & \textbf{$\Delta$ vs. Previous} & \textbf{Total $\Delta$ vs. Benchmark} \\
+\midrule
+Step 1: Standard Benchmark & Zero-shot EEGNet & 52.53 & -- & +0.00 pp \\
+Step 2: + Calibration & EEGNet + 15\% shrinkage calib. & 55.64 & +3.11 pp & +3.11 pp \\
+Step 3: + Riemannian Geometry & Spatial tangent features (matched control) & 70.78 & +15.14 pp & +18.25 pp \\
+\textbf{Step 4: + Sequence Modeling} & \textbf{True-Mamba asymmetric fusion (final)} & \textbf{71.28} & \textbf{+0.50 pp} & \textbf{+18.75 pp} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Matched-Control Attribution and Statistical Significance}
+\label{sec:matched_control}
+A headline accuracy number, however, is not a causal claim. To honestly attribute the 0.50 percentage-point gain of the full model over the spatial-only pipeline (Step 4 vs. Step 3 in Table~\ref{tab:ablation}), we constructed a matched-control model that is byte-identical to the asymmetric fusion architecture in its spatial branch -- same pooled EA whitening, same identity-reference tangent vectorization -- with the Mamba temporal branch surgically removed. We evaluated the difference between the two models with a paired Wilcoxon signed-rank test over all 29 subject-level accuracy pairs, obtaining $W = 185.0$, $p = 0.9234$ (13 wins / 14 losses / 2 ties in favor of the Mamba branch) -- statistically indistinguishable from a coin flip. We report this finding with the same rigor we apply to our headline result: under the properly matched comparison, the Riemannian spatial tangent-space features (Step 3) account for the dominant, statistically robust share of the pipeline's improvement over the calibrated EEGNet baseline, doing the heavy lifting at +15.14 percentage points, while the Mamba temporal branch's contribution (Step 4), though numerically positive in our best single run, does not yet reach statistical significance at $n=29$ subjects. We regard this as a scientifically important negative result in its own right, and we return to its implications for future architectural design in Section~\ref{sec:future_work}.
+
+\subsection{Subject-Wise Analysis}
+Fig.~\ref{fig:rescue} compares per-subject accuracy between the matched spatial control and the full asymmetric Mamba fusion model across all 29 held-out test subjects. While the population-level effect of the Mamba branch does not reach significance, several individual subjects show a substantial improvement (annotated where the gain exceeds 5 percentage points), suggesting the temporal branch may be selectively useful for a subset of subjects whose discriminative signal is more temporally, rather than purely spatially, distributed.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{Fig2_Subject_Wise_Rescue.png}
+\caption{Subject-wise comparison of test accuracy between the matched spatial control and the asymmetric Mamba fusion model across all 29 held-out subjects (strict LOSO). Subjects for which the Mamba branch improves accuracy by more than 5 percentage points are annotated.}
+\label{fig:rescue}
+\end{figure}
+
+\subsection{Confusion Matrix}
+Fig.~\ref{fig:confusion} presents the aggregated, row-normalized confusion matrix of the final asymmetric Mamba fusion model, pooled across all 29 LOSO folds, showing balanced per-class classification behavior for True Memory versus False Memory trials.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{Fig3_Aggregated_Confusion_Matrix.png}
+\caption{Aggregated, row-normalized confusion matrix of the asymmetric spatiotemporal Riemannian Mamba model, pooled across all 29 LOSO folds.}
+\label{fig:confusion}
+\end{figure}
+
+\subsection{Comparison with State-of-the-Art Baselines}
+Table~\ref{tab:sota} situates our results against representative baseline families from the literature reviewed in Section~\ref{sec:related}: convolutional EEGNet \cite{lawhern2018eegnet}, Minimum Distance to Mean (MDM) on the Riemannian manifold \cite{barachant2012multiclass}, tangent-space SVM (TS-SVM) \cite{barachant2013classification}, and a recurrent LSTM temporal model \cite{hochreiter1997long}. EEGNet and both variants of our own pipeline (matched spatial control and full asymmetric fusion) are reproduced end-to-end on our dataset under the identical strict LOSO protocol described above; MDM, TS-SVM, and LSTM rows are included for architectural context based on their design characteristics as reported in the cited literature and have not been re-implemented on this specific dataset in the present study, and their accuracy is therefore intentionally left unreported rather than estimated, so as not to imply a benchmark comparison that was not actually run.
+
+\begin{table*}[t]
+\centering
+\caption{Comparison with Representative Baseline Families}
+\label{tab:sota}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Model} & \textbf{Temporal Modeling} & \textbf{Spatial Alignment} & \textbf{LOSO Acc. (\%)} \\
+\midrule
+EEGNet \cite{lawhern2018eegnet} & Depthwise convolution & Learned (implicit) & 52.53 \\
+MDM \cite{barachant2012multiclass} & None (static) & Riemannian mean & N/R$^{*}$ \\
+TS-SVM \cite{barachant2013classification} & None & Tangent space & N/R$^{*}$ \\
+LSTM \cite{hochreiter1997long} & Recurrent, $O(L)$ & None & N/R$^{*}$ \\
+Matched spatial control (ours) & None & Pooled EA + tangent & 70.78 \\
+\textbf{Asymmetric Mamba fusion (ours)} & \textbf{Mamba SSM, $O(\log L)$} & \textbf{Pooled EA + tangent} & \textbf{71.28} \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize $^{*}$N/R: not re-implemented / not reported on this dataset in this study.}
+\end{table*}
+
+\subsection{Feature-Space Visualization}
+Returning to the t-SNE analysis introduced in Section~\ref{sec:methodology}, Fig.~\ref{fig:tsne} presents the complete three-panel visualization: (A) single-subject class separability for the best-performing individual LOSO subject, showing that clean class separation is achievable within a subject; (B) population-level features colored by class label, entangled as discussed previously; and (C) the identical coordinates colored by subject identity, revealing the pronounced subject-islands structure that motivates pooled Euclidean Alignment. We emphasize that the whitening used to generate this particular visualization is fit on the pooled covariance across all subjects for illustrative purposes, and therefore should not be interpreted as using the same strict per-fold LOSO procedure underlying the quantitative accuracy results reported above.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{Fig4_3D_tSNE_Subject_Islands.png}
+\caption{3D t-SNE visualization of pooled Euclidean-Alignment tangent-space features. (A) Single-subject class separability for the best individual LOSO performer. (B) Population-level features colored by class (True/False Memory), showing entanglement. (C) Population-level features colored by subject identity, revealing distinct ``subject islands'' in feature space.}
+\label{fig:tsne}
+\end{figure*}
+
+\subsection{Spatial Topography}
+Finally, Fig.~\ref{fig:topoplots} visualizes the scalp topography of mean post-alignment channel power for each class, offering a neurophysiologically interpretable complement to the abstract tangent-space features analyzed above, and providing a qualitative sanity check that the spatial patterns exploited by the model are consistent with plausible memory-related cortical topography rather than an artifact of the alignment procedure itself.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{Fig5_Brain_Topoplots.png}
+\caption{Scalp topographic maps of mean post-Euclidean-Alignment channel power, derived from the diagonal of the per-class mean covariance matrix, for True Memory and False Memory trials.}
+\label{fig:topoplots}
+\end{figure*}
+
+% ============================================================
+% V. Conclusion
+% ============================================================
+\section{Conclusion}
+\label{sec:conclusion}
+We have presented Spatiotemporal Riemannian Mamba, an end-to-end pipeline for decoding true versus false memory encoding from single-trial EEG that pairs Riemannian tangent-space spatial features with a lightweight, asymmetric dual-branch Mamba temporal model. Under strict 29-fold Leave-One-Subject-Out evaluation -- a protocol deliberately chosen to reflect the practical reality that a deployed BCI system must generalize to users it has never seen -- the full pipeline achieves 71.28\% mean accuracy, substantially outperforming a calibrated EEGNet baseline. Rather than resting on this headline figure alone, we subjected our own architecture to a matched-control audit and found, with statistical rigor, that the Riemannian spatial features are the dominant driver of the improvement, while the Mamba temporal branch's contribution, though positive in our best run, does not yet reach significance. We regard this transparency as essential to responsible BCI research: a pipeline's most publishable number is not always its most scientifically important finding.
+
+\subsection{Future Work}
+\label{sec:future_work}
+The non-significant result for the Mamba branch is, in our view, an invitation rather than a dead end, and we identify three concrete directions for future work. First, \emph{attention-based branch merging}: the current fusion mechanism is simple concatenation (Eq.~\eqref{eq:fusion}), which treats the spatial and temporal embeddings as independent; a cross-attention or gated fusion mechanism that allows each branch to modulate the other, rather than merely being stacked, may better exploit genuine spatiotemporal interactions that concatenation cannot represent. Second, \emph{multi-modal fusion}: incorporating complementary physiological signals -- eye-tracking, pupillometry, or peripheral autonomic measures recorded alongside EEG during encoding -- could supply the temporal branch with signal that is not redundant with the Riemannian spatial features, potentially producing a more statistically robust contribution than temporal EEG dynamics alone. Third, \emph{real-time inference on edge devices}: Mamba's linear-time, parallel-scan formulation (Eq.~\eqref{eq:discrete_recurrence}) is, in principle, highly amenable to efficient on-device deployment; realizing a low-latency, low-power implementation suitable for a wearable BCI headset would be a natural and practically significant extension of this work, moving the pipeline from an offline analysis tool toward a real-time cognitive-state monitor.
+
+% ============================================================
+% References
+% ============================================================
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

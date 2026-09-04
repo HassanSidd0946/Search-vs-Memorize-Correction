@@ -1,0 +1,296 @@
+{
+  "description": "Follow-up to F-STIM: (a) whether stimulus-to-task assignment is the same variable as block-order parity, (b) per-stimulus counterbalancing balance at n=29.",
+  "part_a_stimulus_assignment_vs_block_order_parity": {
+    "n_distinct_search_set_partitions_across_30_subjects": 21,
+    "n_partitions_with_more_than_one_subject": 6,
+    "n_multi_subject_partitions_with_mixed_parity": 5,
+    "conclusion": "CROSSED / INDEPENDENT, not the same variable. 30 subjects produce 21 distinct Search-set partitions (near-unique per subject, not a small number of shared counterbalance lists), and every multi-subject partition found contains a mix of odd- and even-numbered subjects except where n=1 (trivially parity-pure). Block-order parity (which task block comes first in time) and stimulus-to-task assignment (which pictures go in which block) are independently/near-randomly assigned per subject. F-PARITY's block-order control therefore does NOT also control for the stimulus-identity confound; they require separate controls (F-PARITY for block order, the cross-subject counterbalancing argument below for stimulus identity).",
+    "partitions": [
+      {
+        "n_subjects": 2,
+        "subjects": [
+          "sub-01",
+          "sub-04"
+        ],
+        "parities": [
+          "odd",
+          "even"
+        ],
+        "is_parity_pure": false
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-02"
+        ],
+        "parities": [
+          "even"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-03"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-05"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 3,
+        "subjects": [
+          "sub-06",
+          "sub-10",
+          "sub-24"
+        ],
+        "parities": [
+          "even",
+          "even",
+          "even"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 3,
+        "subjects": [
+          "sub-07",
+          "sub-13",
+          "sub-20"
+        ],
+        "parities": [
+          "odd",
+          "odd",
+          "even"
+        ],
+        "is_parity_pure": false
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-08"
+        ],
+        "parities": [
+          "even"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-09"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 3,
+        "subjects": [
+          "sub-11",
+          "sub-18",
+          "sub-22"
+        ],
+        "parities": [
+          "odd",
+          "even",
+          "even"
+        ],
+        "is_parity_pure": false
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-12"
+        ],
+        "parities": [
+          "even"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 2,
+        "subjects": [
+          "sub-14",
+          "sub-23"
+        ],
+        "parities": [
+          "even",
+          "odd"
+        ],
+        "is_parity_pure": false
+      },
+      {
+        "n_subjects": 2,
+        "subjects": [
+          "sub-15",
+          "sub-26"
+        ],
+        "parities": [
+          "odd",
+          "even"
+        ],
+        "is_parity_pure": false
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-16"
+        ],
+        "parities": [
+          "even"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-17"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-19"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-21"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-25"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-27"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-28"
+        ],
+        "parities": [
+          "even"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-29"
+        ],
+        "parities": [
+          "odd"
+        ],
+        "is_parity_pure": true
+      },
+      {
+        "n_subjects": 1,
+        "subjects": [
+          "sub-30"
+        ],
+        "parities": [
+          "even"
+        ],
+        "is_parity_pure": true
+      }
+    ]
+  },
+  "part_b_per_stimulus_balance_at_n29": {
+    "n_stimuli": 100,
+    "mean_search_fraction": 0.5,
+    "min_search_fraction": 0.2413793103448276,
+    "max_search_fraction": 0.7586206896551724,
+    "residual_imbalance_distribution": [
+      {
+        "n_subjects_assigning_to_search_of_29": 7,
+        "n_subjects_assigning_to_memorize_of_29": 22,
+        "n_stimuli": 10,
+        "pct_of_100_stimuli": 10.0
+      },
+      {
+        "n_subjects_assigning_to_search_of_29": 11,
+        "n_subjects_assigning_to_memorize_of_29": 18,
+        "n_stimuli": 20,
+        "pct_of_100_stimuli": 20.0
+      },
+      {
+        "n_subjects_assigning_to_search_of_29": 13,
+        "n_subjects_assigning_to_memorize_of_29": 16,
+        "n_stimuli": 10,
+        "pct_of_100_stimuli": 10.0
+      },
+      {
+        "n_subjects_assigning_to_search_of_29": 14,
+        "n_subjects_assigning_to_memorize_of_29": 15,
+        "n_stimuli": 10,
+        "pct_of_100_stimuli": 10.0
+      },
+      {
+        "n_subjects_assigning_to_search_of_29": 15,
+        "n_subjects_assigning_to_memorize_of_29": 14,
+        "n_stimuli": 10,
+        "pct_of_100_stimuli": 10.0
+      },
+      {
+        "n_subjects_assigning_to_search_of_29": 16,
+        "n_subjects_assigning_to_memorize_of_29": 13,
+        "n_stimuli": 10,
+        "pct_of_100_stimuli": 10.0
+      },
+      {
+        "n_subjects_assigning_to_search_of_29": 18,
+        "n_subjects_assigning_to_memorize_of_29": 11,
+        "n_stimuli": 20,
+        "pct_of_100_stimuli": 20.0
+      },
+      {
+        "n_subjects_assigning_to_search_of_29": 22,
+        "n_subjects_assigning_to_memorize_of_29": 7,
+        "n_stimuli": 10,
+        "pct_of_100_stimuli": 10.0
+      }
+    ],
+    "conclusion": "The POOLED average is exactly 50.0% (mean_search_fraction=0.5) across all 100 stimuli at n=29, but individual stimuli are NOT each split 50/50 or 14/15 -- per-stimulus assignment ranges from 7/29 (24.1%) to 22/29 (75.9%) subjects assigning that stimulus to Search. The distribution is symmetric in complementary pairs (counts and their 29-complements appear with equal stimulus frequency), consistent with a small set of counterbalance list templates combined across subjects rather than a single fixed 50/50 rule per item. This residual per-stimulus imbalance is the honest quantitative answer to 'how balanced is the counterbalancing at n=29' -- it is balanced in aggregate (defusing the LOSO-pool-level confound) but not balanced per-item (so within-subject, and even within small subsets of the training pool, individual-stimulus class correlation is not exactly zero)."
+  }
+}

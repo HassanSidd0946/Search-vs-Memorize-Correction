@@ -1,0 +1,115 @@
+{
+  "description": "F15 -- params/MACs/latency/peak-memory efficiency benchmark for every model variant used in this codebase's production drivers.",
+  "n_times": 251,
+  "n_channels": 62,
+  "spatial_dim": 1953,
+  "n_warmup": 10,
+  "n_iters": 50,
+  "cuda_available": false,
+  "results": [
+    {
+      "model": "mamba_temporal_branch",
+      "device": "cpu",
+      "n_params": 3990,
+      "layer_macs_hooked": 859840,
+      "scan_macs_analytical": 1100384,
+      "total_macs": 1960224,
+      "latency_batch1": {
+        "mean_ms": 41.69116200000644,
+        "std_ms": 8.636327159959203,
+        "median_ms": 40.873699999792734,
+        "min_ms": 23.861499999838998,
+        "max_ms": 59.34299999989889,
+        "n_iters": 50
+      },
+      "cpu_memory_proxy_mb": 11.990154266357422
+    },
+    {
+      "model": "eegnet",
+      "device": "cpu",
+      "n_params": 2810,
+      "layer_macs_hooked": 15843472,
+      "scan_macs_analytical": 0,
+      "total_macs": 15843472,
+      "latency_batch1": {
+        "mean_ms": 23.63002799997048,
+        "std_ms": 10.732288183137968,
+        "median_ms": 19.792149999830144,
+        "min_ms": 7.908199999292265,
+        "max_ms": 58.27030000000377,
+        "n_iters": 50
+      },
+      "cpu_memory_proxy_mb": 8.436233520507812
+    },
+    {
+      "model": "joint_dualbranch_fusion",
+      "device": "cpu",
+      "n_params": 7896,
+      "layer_macs_hooked": 863746,
+      "scan_macs_analytical": 1100384,
+      "total_macs": 1964130,
+      "latency_batch1": {
+        "mean_ms": 38.52664999994886,
+        "std_ms": 7.973644764068274,
+        "median_ms": 37.40194999954838,
+        "min_ms": 23.161699999945995,
+        "max_ms": 56.44590000065364,
+        "n_iters": 50
+      },
+      "cpu_memory_proxy_mb": 11.997665405273438
+    },
+    {
+      "model": "ts_svm",
+      "device": "cpu",
+      "n_params": null,
+      "total_macs": null,
+      "latency_batch1": {
+        "mean_ms": 2.3342280000179016,
+        "std_ms": 1.3195269192994783,
+        "median_ms": 1.9320999999763444,
+        "min_ms": 1.0440999994898448,
+        "max_ms": 7.650800000192248,
+        "n_iters": 50
+      },
+      "peak_memory_mb": null
+    },
+    {
+      "model": "ts_lda_shrinkage",
+      "device": "cpu",
+      "n_params": null,
+      "total_macs": null,
+      "latency_batch1": {
+        "mean_ms": 1.0320700000193028,
+        "std_ms": 0.41619388997774315,
+        "median_ms": 0.9105500002988265,
+        "min_ms": 0.6773000004614005,
+        "max_ms": 2.666499999577354,
+        "n_iters": 50
+      },
+      "peak_memory_mb": null
+    },
+    {
+      "model": "mdm",
+      "device": "cpu",
+      "n_params": null,
+      "total_macs": null,
+      "latency_batch1": null,
+      "peak_memory_mb": null,
+      "note": "NOT MEASURED -- hand-rolled AIRM-distance estimator in run_baselines_mdm_tssvm_tslda_csp.py, not reimplemented here. See KNOWN FOLLOW-UP."
+    },
+    {
+      "model": "csp_lda",
+      "device": "cpu",
+      "n_params": null,
+      "total_macs": null,
+      "latency_batch1": null,
+      "peak_memory_mb": null,
+      "note": "NOT MEASURED -- hand-rolled CSP filters in run_baselines_mdm_tssvm_tslda_csp.py, not reimplemented here. See KNOWN FOLLOW-UP."
+    }
+  ],
+  "known_follow_up": [
+    "LSTM matched-capacity control (run_capacity_sweep.py's TemporalOnlyModelLSTM) is NOT included -- its hidden_size is only determined by find_matched_lstm_hidden_size after F-CAPACITY's ::full entrypoint actually runs on Modal (not yet run). Re-run this script with that hidden_size once available, rather than benchmarking a placeholder size now.",
+    "MDM and CSP+LDA (hand-rolled SPD-manifold estimators in run_baselines_mdm_tssvm_tslda_csp.py) have no latency numbers here -- would require duplicating their prediction-path code; flagged, not fabricated.",
+    "GPU numbers are absent unless this script is re-run on a CUDA-capable machine."
+  ]
+}

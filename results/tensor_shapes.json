@@ -1,0 +1,250 @@
+{
+  "description": "F1 -- empirical confirmation of AUDIT.md Q1's input-tensor-shape claim via forward hooks",
+  "hyperparameters": {
+    "d_model": 16,
+    "d_state": 8,
+    "n_layers": 1,
+    "n_channels": 62,
+    "n_times": 251
+  },
+  "input_shape": [
+    1,
+    62,
+    251
+  ],
+  "output_shape": [
+    1,
+    2
+  ],
+  "shape_chain": [
+    {
+      "module": "temporal.in_proj",
+      "class": "Linear",
+      "input_shapes": [
+        [
+          1,
+          251,
+          62
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0.norm",
+      "class": "LayerNorm",
+      "input_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0.in_proj",
+      "class": "Linear",
+      "input_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          64
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0.conv1d",
+      "class": "Conv1d",
+      "input_shapes": [
+        [
+          1,
+          32,
+          251
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          32,
+          254
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0.x_proj",
+      "class": "Linear",
+      "input_shapes": [
+        [
+          1,
+          251,
+          32
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          20
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0.dt_proj",
+      "class": "Linear",
+      "input_shapes": [
+        [
+          1,
+          251,
+          4
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          32
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0.out_proj",
+      "class": "Linear",
+      "input_shapes": [
+        [
+          1,
+          251,
+          32
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0.dropout",
+      "class": "Dropout",
+      "input_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "temporal.blocks.0",
+      "class": "SelectiveSSMBlock",
+      "input_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "temporal.final_norm",
+      "class": "LayerNorm",
+      "input_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          251,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "temporal.dropout",
+      "class": "Dropout",
+      "input_shapes": [
+        [
+          1,
+          16
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "temporal",
+      "class": "MambaTemporalBranch",
+      "input_shapes": [
+        [
+          1,
+          62,
+          251
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          16
+        ]
+      ]
+    },
+    {
+      "module": "classifier",
+      "class": "Linear",
+      "input_shapes": [
+        [
+          1,
+          16
+        ]
+      ],
+      "output_shapes": [
+        [
+          1,
+          2
+        ]
+      ]
+    }
+  ]
+}
