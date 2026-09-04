@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.6)  4 SEP 2026 18:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.6)  4 SEP 2026 18:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -389,153 +389,27 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring OFF on input line 25.
- (draft_ieee.out) (draft_ieee.out)
 \@outlinefile=\write3
 \openout3 = `draft_ieee.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 25.
-Package microtype Info: Applying patch `item' on input line 25.
-Package microtype Info: Applying patch `toc' on input line 25.
-Package microtype Info: Applying patch `eqnum' on input line 25.
-Package microtype Info: Applying patch `footnote' on input line 25.
-Package microtype Info: Applying patch `verbatim' on input line 25.
-LaTeX Info: Redefining \microtypesetup on input line 25.
-Package microtype Info: Generating PDF output.
-Package microtype Info: Character protrusion enabled (level 2).
-Package microtype Info: Using default protrusion set `alltext'.
-Package microtype Info: Automatic font expansion enabled (level 2),
-(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
-Package microtype Info: Using default expansion set `alltext-nott'.
-Package microtype Info: Patching command `\showhyphens'.
-Package microtype Info: No adjustment of tracking.
-Package microtype Info: No adjustment of interword spacing.
-Package microtype Info: No adjustment of character kerning.
- (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-ptm.cfg
-File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
-) (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
-)
-LaTeX Font Info:    Trying to load font information for U+msa on input line 30.
- (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-) (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
- (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-)
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 43.
- (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [1{C:/Users/hassa/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
+d:/EEG/PAPER/draft_ieee.tex:25: I can't write on file `draft_ieee.pdf'.
+(Press Enter to retry, or Control-C to exit; default file extension is `.pdf')
+Please type another file name for output
+d:/EEG/PAPER/draft_ieee.tex:25: Emergency stop.
+<to be read again> 
+                   \edef 
+l.25 \begin{document}
+                     
+*** (job aborted, file error in nonstop mode)
 
-]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 53.
- (C:\Users\hassa\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [2] [3]
-<figures/fig1_discovery_timeline.pdf, id=181, 823.87799pt x 357.60193pt>
-File: figures/fig1_discovery_timeline.pdf Graphic file (type pdf)
-<use figures/fig1_discovery_timeline.pdf>
-Package pdftex.def Info: figures/fig1_discovery_timeline.pdf  used on input line 95.
-(pdftex.def)             Requested size: 516.0pt x 223.96445pt.
- [4]
-<figures/fig2_c3_jackknife.pdf, id=201, 787.45946pt x 324.5977pt>
-File: figures/fig2_c3_jackknife.pdf Graphic file (type pdf)
-<use figures/fig2_c3_jackknife.pdf>
-Package pdftex.def Info: figures/fig2_c3_jackknife.pdf  used on input line 132.
-(pdftex.def)             Requested size: 252.0pt x 103.87338pt.
-
-Underfull \vbox (badness 5231) has occurred while \output is active []
-
-<figures/fig3_null_distribution.pdf, id=203, 714.16531pt x 301.29362pt>
-File: figures/fig3_null_distribution.pdf Graphic file (type pdf)
-<use figures/fig3_null_distribution.pdf>
-Package pdftex.def Info: figures/fig3_null_distribution.pdf  used on input line 143.
-(pdftex.def)             Requested size: 252.0pt x 106.31406pt.
- [5 <./figures/fig1_discovery_timeline.pdf> <./figures/fig2_c3_jackknife.pdf>]
-<figures/fig4_d2_parity_split.pdf, id=388, 715.09222pt x 322.90237pt>
-File: figures/fig4_d2_parity_split.pdf Graphic file (type pdf)
-<use figures/fig4_d2_parity_split.pdf>
-Package pdftex.def Info: figures/fig4_d2_parity_split.pdf  used on input line 160.
-(pdftex.def)             Requested size: 516.0pt x 233.00685pt.
- [6 <./figures/fig3_null_distribution.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7 <./figures/fig4_d2_parity_split.pdf>]
-Underfull \hbox (badness 4582) in paragraph at lines 211--212
-[]\OT1/ptm/b/n/10 (+20) Code. \OT1/ptm/m/n/10 (+20) All scripts ref-er-enced in this pa-per, R1(a),
- []
-
-
-Underfull \hbox (badness 2790) in paragraph at lines 211--212
-\OT1/ptm/m/n/10 (+20) util-ity, to-gether with \OT1/pcr/m/n/10 results/RESULTS_LEDGER.md
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 211--212
-\OT1/ptm/m/n/10 (+20) HassanSidd0946 / Search-[]vs-[]Memorize-[]Correction$[]. Com-mit
- []
-
-
-Underfull \hbox (badness 1983) in paragraph at lines 211--212
-\OT1/ptm/m/n/10 (+20) hash: 4082949c; a spe-cific com-mit will be tagged at
- []
-
-[8] (draft_ieee.bbl
-Underfull \hbox (badness 2221) in paragraph at lines 97--102
-\OT1/ptm/m/n/8 (+20) C. Brod-beck, R. Goj, M. Jas, T. Brooks, L. Parkko-nen, and
- []
-
-
-Underfull \hbox (badness 6625) in paragraph at lines 187--191
-\OT1/ptm/m/n/8 (+20) ``Single-trial anal-y-sis and clas-si-fi-ca-tion of ERP components---
- []
-
-
-Underfull \hbox (badness 3977) in paragraph at lines 187--191
-\OT1/ptm/m/n/8 (+20) a tu-to-rial,'' \OT1/ptm/m/it/8 (+20) Neu-roIm-age\OT1/ptm/m/n/8 (+20) , vol. 56, no. 2, pp. 814--825, 2011,
- []
-
-[9]
-Underfull \hbox (badness 1867) in paragraph at lines 228--231
-[]\OT1/ptm/m/n/8 (+20) C. D. Cham-bers, ``Reg-is-tered re-ports: A new pub-lish-ing ini-tia-
- []
-
-
-Underfull \hbox (badness 3579) in paragraph at lines 228--231
-\OT1/ptm/m/n/8 (+20) tive at Cor-tex,'' \OT1/ptm/m/it/8 (+20) Cor-tex\OT1/ptm/m/n/8 (+20) , vol. 49, no. 3, pp. 609--610, 2013,
- []
-
-) [10
-
-] [11] (draft_ieee.aux)
- ***********
-LaTeX2e <2025-11-01>
-L3 programming layer <2025-12-24>
- ***********
-Package rerunfilecheck Info: File `draft_ieee.out' has not changed.
-(rerunfilecheck)             Checksum: 7C035A18D97DA7ADF2A621FC641A760D;3863.
- ) 
+ 
 Here is how much of TeX's memory you used:
- 13418 strings out of 467871
- 211022 string characters out of 5418377
- 682236 words of memory out of 5000000
- 41569 multiletter control sequences out of 15000+600000
- 689801 words of font info for 431 fonts, out of 8000000 for 9000
+ 12247 strings out of 467871
+ 193760 string characters out of 5418377
+ 633703 words of memory out of 5000000
+ 41039 multiletter control sequences out of 15000+600000
+ 648791 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,2284b,618s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/hassa/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on draft_ieee.pdf (11 pages, 391091 bytes).
-PDF statistics:
- 813 PDF objects out of 1000 (max. 8388607)
- 90 named destinations out of 1000 (max. 500000)
- 59077 words of extra memory for PDF output out of 61914 (max. 10000000)
-
+ 75i,1n,79p,271b,159s stack positions out of 10000i,1000n,20000p,200000b,200000s
+d:/EEG/PAPER/draft_ieee.tex:25:  ==> Fatal error occurred, no output PDF file produced!
